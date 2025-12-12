@@ -6,11 +6,12 @@ export const redis = new Redis({
 })
 
 export async function getCachedAnswer(query: string) {
-    const catched = await redis.get(query);
-    if (!catched) {
+    const cached = await redis.get(query);
+    if (!cached) {
         return null;
     }
-    return JSON.parse(catched as string);
+    // @upstash/redis parses JSON automatically
+    return typeof cached === 'string' ? JSON.parse(cached) : cached;
 }
 
 export async function cacheAnswer(query: string, data: any) {
