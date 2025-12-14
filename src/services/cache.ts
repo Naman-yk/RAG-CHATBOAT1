@@ -11,7 +11,12 @@ export async function getCachedAnswer(query: string) {
         return null;
     }
     // @upstash/redis parses JSON automatically
-    return typeof cached === 'string' ? JSON.parse(cached) : cached;
+    try {
+        return typeof cached === 'string' ? JSON.parse(cached) : cached;
+    } catch (e) {
+        console.error("Cache parsing error:", e);
+        return null;
+    }
 }
 
 export async function cacheAnswer(query: string, data: any) {
