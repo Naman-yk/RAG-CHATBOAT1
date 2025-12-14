@@ -10,7 +10,11 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 
 // Serve uploaded files
+// Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
+
+// Serve Frontend
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 
 // Routes
 app.use("/upload", uploadRouter);
